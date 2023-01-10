@@ -26,12 +26,7 @@ for x in range(0,len(pagelst)):
         for z in allpage:
             pageUrl.append(z.get_attribute('href'))
             webPage.append(url)
-category=[]
-title=[]
-price=[]
-discount=[]
-imgURL=[]
-d1=[]
+
 df=pd.DataFrame()
 df['Web Page']=webPage
 df['Page Url']=pageUrl
