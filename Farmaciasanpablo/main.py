@@ -12,10 +12,14 @@ cluster=MongoClient('DB URL')
 driver = webdriver.Edge('msedgedriver.exe')
 
 #All pages urls
-pagelst=['https://www.farmaciasanpablo.com.mx/medicamentos/c/06?pageSize=48&currentPage=']
+pagelst=['https://www.farmaciasanpablo.com.mx/medicamentos/c/06?pageSize=48&currentPage=','https://www.farmaciasanpablo.com.mx/equipo-y-botiquin/c/05?pageSize=48&currentPage=',
+'https://www.farmaciasanpablo.com.mx/san-pablo-natural/c/07?pageSize=48&currentPage=','https://www.farmaciasanpablo.com.mx/vitaminas-y-suplementos/c/09?pageSize=48&currentPage=',
+'https://www.farmaciasanpablo.com.mx/dermocosmeticos/c/04?pageSize=48&currentPage=','https://www.farmaciasanpablo.com.mx/cuidado-personal-y-belleza/c/03?pageSize=48&currentPage=',
+'https://www.farmaciasanpablo.com.mx/bebes/c/02?pageSize=48&currentPage=','https://www.farmaciasanpablo.com.mx/alimentos-y-bebidas/c/01?pageSize=48&currentPage=',
+'https://www.farmaciasanpablo.com.mx/salud-sexual/c/08?pageSize=48&currentPage=']
 
 #All pages length
-pagelnght=[1]
+pagelnght=[111,11,30,9,25,26,11,3,1]
 def xpath(path):
     return WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH,path))).text
 
