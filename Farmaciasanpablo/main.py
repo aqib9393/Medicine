@@ -1,17 +1,25 @@
-from time import sleep
-import pandas as pd
+#All required Libraries
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from pymongo import MongoClient
+
+#Database Url
 cluster=MongoClient('DB URL')
+
+#Web driver path
 driver = webdriver.Edge('msedgedriver.exe')
+
+#All pages urls
 pagelst=['https://www.farmaciasanpablo.com.mx/medicamentos/c/06?pageSize=48&currentPage=']
+
+#All pages length
 pagelnght=[1]
 def xpath(path):
     return WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH,path))).text
 
+#store all pages url in list
 allPages=[]
 for x in range(0,len(pagelst)):
     for y in range(0,pagelnght[x]+1):
@@ -21,8 +29,8 @@ for x in range(0,len(pagelst)):
         for z in pages:
             allPages.append(z.get_attribute('href'))
 
+#run all pages and get price, product, and etc.
 Data=[]
-
 for page in allPages:
     print(page)
     driver.get(page)
@@ -41,6 +49,7 @@ for page in allPages:
     _extra=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[4]/app-product-information/div/div')
     extra={}
     ex=_extra.split('\n')
+    #insert every data in json format
     d1={
             "URL":_url,
             "Category":_category,
@@ -54,7 +63,12 @@ for page in allPages:
     for y in range(0,len(ex),2):
         extra.update({ex[y].replace(" ","_"):ex[y+1]})
         d1['ExtraInfo'].update(extra)
+    #add all json data into list
     Data.append(d1)
+
+#call Database
 db=cluster['Data']
+#Call databse collection
 collection=db['farmaciasanpablo']
+#insert all data into collection
 collection.insert_many(Data)
