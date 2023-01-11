@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from pymongo import MongoClient
-cluster=MongoClient('mongodb+srv://scrapper:H57jHSsM4KT1eqPG@webscrapper.3uveefb.mongodb.net/scrapper?retryWrites=true&w=majority')
+cluster=MongoClient('DB URL')
 driver = webdriver.Edge('msedgedriver.exe')
 pagelst=['https://www.farmaciasanpablo.com.mx/medicamentos/c/06?pageSize=48&currentPage=']
 pagelnght=[1]

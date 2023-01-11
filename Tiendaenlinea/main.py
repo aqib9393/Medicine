@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 driver = webdriver.Edge('..//msedgedriver.exe')
-cluster=MongoClient('mongodb+srv://scrapper:H57jHSsM4KT1eqPG@webscrapper.3uveefb.mongodb.net/scrapper?retryWrites=true&w=majority')
+cluster=MongoClient('DB URL')
 pagelst=['https://tiendaenlinea.benavides.com.mx/semana-del-bebe.html?p=','https://tiendaenlinea.benavides.com.mx/promociones.html?p=','https://tiendaenlinea.benavides.com.mx/salud.html?p=',
 'https://tiendaenlinea.benavides.com.mx/farmacia.html?p=','https://tiendaenlinea.benavides.com.mx/prevencion.html?p=','https://tiendaenlinea.benavides.com.mx/marca-propia.html?p=',
 'https://tiendaenlinea.benavides.com.mx/salud-sexual.html?p=','https://tiendaenlinea.benavides.com.mx/bebes/alimentos.html?p=','https://tiendaenlinea.benavides.com.mx/cuidado-personal-y-belleza.html?p='

@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from pymongo import MongoClient
-cluster=MongoClient('mongodb+srv://scrapper:H57jHSsM4KT1eqPG@webscrapper.3uveefb.mongodb.net/scrapper?retryWrites=true&w=majority')
+cluster=MongoClient('DB URL')
 driver = webdriver.Edge('..//msedgedriver.exe')
 pagelst=['https://www.fahorro.com/derma/productos-dermocosmeticos.html', 'https://www.fahorro.com/bebes.html','https://www.fahorro.com/promociones/vitaminas-app.html',
 'https://www.fahorro.com/bienestar-sexual.html','https://www.fahorro.com/higiene-personal.html', 'https://www.fahorro.com/higiene-bucal.html','https://www.fahorro.com/hombre.html',
