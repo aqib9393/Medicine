@@ -49,10 +49,14 @@ for page in allPages:
         _price=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'h3.priceTotal'))).text
     except:
         _price=''   
+    label=WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'div.row > div.col-md-6.col-lg-6.col-4.titleCell')))
+    info=WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'div.col-md-6.col-lg-6.col-7.data.custom-pos-top.custom-pos-top-web > span')))
             #extra info
-    _extra=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[4]/app-product-information/div/div')
+    #Extra info updates
+    #lavle = div.row > div.col-md-6.col-lg-6.col-4.titleCell
+    #info= div.col-md-6.col-lg-6.col-7.data.custom-pos-top.custom-pos-top-web > span
     extra={}
-    ex=_extra.split('\n')
+    
     #insert every data in json format
     d1={
             "URL":_url,
@@ -64,8 +68,8 @@ for page in allPages:
                 
                 }
             }   
-    for y in range(0,len(ex),2):
-        extra.update({ex[y].replace(" ","_"):ex[y+1]})
+    for y in range(0,len(label)):
+        extra.update({label[y].text:info[y].text})
         d1['ExtraInfo'].update(extra)
     #add all json data into list
     Data.append(d1)
