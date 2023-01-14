@@ -36,7 +36,6 @@ for x in range(0,len(pagelst)):
 #run all pages and get price, product, and etc.
 Data=[]
 for page in allPages:
-    print(page)
     driver.get(page)
     driver.implicitly_wait(10)
     driver.implicitly_wait(10)
@@ -45,6 +44,10 @@ for page in allPages:
     _category=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'body > app-root > cx-storefront > main > cx-page-layout > cx-page-slot.Summary-Desk-Right.has-components > app-product-intro > div > div > span'))).text
     _imgurl=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME,'imgPDP'))).get_attribute('src')
     _product=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[3]/app-product-summary/div/div/div[1]/h3')
+    try:
+        _cut=WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.col-md-3'))).text
+    except:
+        _cut=''
     try:        
         _price=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'h3.priceTotal'))).text
     except:
@@ -56,21 +59,32 @@ for page in allPages:
     #lavle = div.row > div.col-md-6.col-lg-6.col-4.titleCell
     #info= div.col-md-6.col-lg-6.col-7.data.custom-pos-top.custom-pos-top-web > span
     extra={}
-    
+
     #insert every data in json format
     d1={
+            "Pharmacy name":"farmaciasanpablo",
             "URL":_url,
             "Category":_category,
             "Product":_product,
             "Price":_price,
+            "Cut Price":_cut,
             "Image":_imgurl,
-            "ExtraInfo":{
-                
+            "ExtraInfo":{    
                 }
             }   
-    for y in range(0,len(label)):
-        extra.update({label[y].text:info[y].text})
-        d1['ExtraInfo'].update(extra)
+    extra={}
+    ingrad=[]
+    for y in range(len(label)):
+        if 'Substancia Activa 1' in label[y].text or 'Substancia Activa 2' in label[y].text or 'Substancia Activa 3' in label[y].text:
+            if 'Concentración' not in label[y].text:
+                #print(label[y].text)
+                #extra.update({'Ingrade':info[y].text})
+                ingrad.append(info[y].text)
+        else:
+            extra.update({label[y].text:info[y].text})
+    extra.update({"Ingredientes":ingrad})
+    d1['ExtraInfo'].update(extra)
+
     #add all json data into list
     Data.append(d1)
 

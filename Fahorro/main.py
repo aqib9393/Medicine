@@ -44,44 +44,57 @@ df['page_url']=page_url
 #run all pages and get price, product, and etc.
 alldata=[]
 for x in range(len(df)):
-        print(x)
         driver.get(df['page_url'][x])
         driver.implicitly_wait(5)
         _product=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'span.base'))).text
         _price=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'span.price'))).text
         try:
+            _cut=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'old-price'))).text
+        except:
+            _cut=''
+        try:
             _img=WebDriverWait(driver,5).until(EC.presence_of_element_located((By.CLASS_NAME,'magnify-opaque'))).get_attribute('src')
         except:
             _img=WebDriverWait(driver,5).until(EC.presence_of_element_located((By.CLASS_NAME,'fotorama__img'))).get_attribute('src')
         try:
-
             WebDriverWait(driver,3).until(EC.presence_of_element_located((By.ID,'tab-label-additional-title'))).click()
         except:
             pass
         _extra=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.TAG_NAME,'tbody'))).text
-        
+        th=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'th.col')))
+        td=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'td.col')))
         _category=df['Current Page'][0].split('?p')[0]
         _category=_category.split('.html')[0]
         _category=_category.split('.com/')[1]
         
         #insert every data in json format
         d1={
+            "Pharmacy name":"fahorro",
             "URL":df['page_url'][x],
             "Category":_category,
             "Product":_product,
             "Price":_price,
+            "Cut Price":_cut,
             "Image":_img,
             "ExtraInfo":{
                 
                 }
             }   
         extra={}
-        ex=_extra.split('\n')
-        for y in range(0,len(ex)):
-            word=' '
-            word=word.join(ex[y].split(' ')[:-1])
-            extra.update({str(word):str(ex[y].split(' ')[-1])})
+        for y in range(len(td)):
+            if  'Ingredientes'== th[y].text:
+                ingred=td[y].text.split(',')
+                item=[]
+                for ingd in ingred:
+                    item.append(ingd)
+                extra.update({'Ingredientes':item})
+            else:
+                extra.update({th[y].text:td[y].text})
         d1['ExtraInfo'].update(extra)
+
+
+
+
         #add all json data into list
         alldata.append(d1)
 

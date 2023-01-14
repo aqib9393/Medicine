@@ -46,7 +46,6 @@ df['Page Url']=pageUrl
 #insert every data in json format
 gotData=[]
 for x in range(0,len(df)):
-    print(x)
     driver.get(df['Page Url'][x])
     driver.implicitly_wait(3)
     _category=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'categoriesproductdetail'))).text
@@ -69,6 +68,7 @@ for x in range(0,len(df)):
         _d1.update({label[y].text:data[y].text})
     #insert every data in json format
     d1={
+        "Pharmacy name":"tiendaenlinea",
        "URL":df['Page Url'][x], 
        "Category":_category,
         "Product":_product,
