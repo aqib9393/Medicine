@@ -73,7 +73,7 @@ for x in range(0,len(df)):
        "Category":_category,
         "Product":_product,
         "Price":_price,
-        "Cut Price":_cutPrice,
+        "CutPrice":_cutPrice,
         "Image":_imgUrl,  
         "ExtraInfo":{}
     }
