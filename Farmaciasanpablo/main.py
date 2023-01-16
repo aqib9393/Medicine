@@ -68,7 +68,7 @@ for page in allPages:
             "Product":_product,
             "Price":_price,
             "CutPrice":_cut,
-            "Image":_imgurl,
+            "Image":[_imgurl],
             "ExtraInfo":{    
                 }
             }   
