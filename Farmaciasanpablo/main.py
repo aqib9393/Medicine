@@ -38,11 +38,19 @@ Data=[]
 for page in allPages:
     driver.get(page)
     driver.implicitly_wait(10)
-    driver.implicitly_wait(10)
     _url=driver.current_url
+    imgLinks=driver.find_elements(By.CSS_SELECTOR,'div > cx-media.mini-image > img')
+    images=[]
+    for x in imgLinks:
+        x.click()
+        images.append(driver.find_element(By.CSS_SELECTOR,'#image-container > figure > img').get_attribute('src'))
+    #_product=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[3]/app-product-summary/div/div/div[1]/h3')
+    try:
+        _cut=WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.col-md-3.col-lg-3.col-10>p.discount'))).text.replace('$','').replace('MXN','').replace(' ','')    
+    except:
+        _cut=''
     #_category=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[3]/app-product-intro/div/div/span')
     _category=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'body > app-root > cx-storefront > main > cx-page-layout > cx-page-slot.Summary-Desk-Right.has-components > app-product-intro > div > div > span'))).text
-    _imgurl=WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME,'imgPDP'))).get_attribute('src')
     _product=xpath('/html/body/app-root/cx-storefront/main/cx-page-layout/cx-page-slot[3]/app-product-summary/div/div/div[1]/h3')
     try:
         _cut=WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'div.col-md-3'))).text
@@ -68,7 +76,7 @@ for page in allPages:
             "Product":_product,
             "Price":_price,
             "CutPrice":_cut,
-            "Image":[_imgurl],
+            "Image":images,
             "ExtraInfo":{    
                 }
             }   

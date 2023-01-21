@@ -46,6 +46,23 @@ alldata=[]
 for x in range(len(df)):
         driver.get(df['page_url'][x])
         driver.implicitly_wait(5)
+        _img=[]
+        try:
+            clickImages=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'div.fotorama__nav__frame')))
+            for singleImage in clickImages:
+                try:
+                    singleImage.click()
+                    sleep(1)
+                    allImage=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'#magnifier-item-0')))
+                    for image in allImage:
+                        getLink=image.get_attribute('src')
+                        if getLink not in _img:
+                            _img.append(getLink)
+                except:
+                    pass
+        except:
+            _img.append(WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'#magnifier-item-0'))).get_attribute('src'))
+                
         _product=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'span.base'))).text
         _price=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CSS_SELECTOR,'span.price'))).text
         try:
@@ -53,14 +70,10 @@ for x in range(len(df)):
         except:
             _cut=''
         try:
-            _img=WebDriverWait(driver,5).until(EC.presence_of_element_located((By.CLASS_NAME,'magnify-opaque'))).get_attribute('src')
-        except:
-            _img=WebDriverWait(driver,5).until(EC.presence_of_element_located((By.CLASS_NAME,'fotorama__img'))).get_attribute('src')
-        try:
             WebDriverWait(driver,3).until(EC.presence_of_element_located((By.ID,'tab-label-additional-title'))).click()
         except:
             pass
-        _extra=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.TAG_NAME,'tbody'))).text
+        
         th=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'th.col')))
         td=WebDriverWait(driver,3).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,'td.col')))
         _category=df['Current Page'][0].split('?p')[0]

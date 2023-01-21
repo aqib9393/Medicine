@@ -51,7 +51,7 @@ for x in range(0,len(df)):
     _category=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'categoriesproductdetail'))).text
     _product=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'page-title'))).text
     _price=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'price'))).text
-    _cutPrice=WebDriverWait(driver,3).until(EC.presence_of_element_located((By.CLASS_NAME,'price-wrapper'))).text
+    _cutPrice=WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,'price-wrapper'))).text
     if _price==_cutPrice:
         _cutPrice=''
     try:
